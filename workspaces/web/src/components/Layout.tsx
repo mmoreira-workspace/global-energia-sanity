@@ -1,24 +1,28 @@
 import React from "react";
-import Header from "./Header";
 import Footer from "./Footer";
+import Header from "./Header";
 
 interface LayoutProps {
-    logoUrl: string;
-    headerButtons: {
-      buttonText: string;
-      buttonUrl: string;
-    }[];
-    footerText?: string;
-    children: React.ReactNode;
-  }
-  
+  logoUrl?: string;
+  headerButtons?: {
+    buttonText?: string;
+    buttonUrl?: string;
+  }[];
+  footerText?: string;
+  children: React.ReactNode;
+}
 
-export default function Layout({ logoUrl, headerButtons, children }: LayoutProps) {
+export default function Layout({
+  logoUrl,
+  headerButtons = [],
+  footerText,
+  children,
+}: LayoutProps) {
   return (
     <>
       <Header logoUrl={logoUrl} buttons={headerButtons} />
       <main>{children}</main>
-      <Footer logoUrl={logoUrl} />
+      <Footer logoUrl={logoUrl} footerText={footerText} />
     </>
   );
 }

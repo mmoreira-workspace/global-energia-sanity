@@ -8,8 +8,8 @@ export default defineConfig({
   name: 'default',
   title: 'global-energia',
 
-  projectId: 'j87m344w',
-  dataset: 'production',
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'j87m344w',
+  dataset: process.env.SANITY_STUDIO_DATASET || 'production',
 
   plugins: [structureTool({structure}), visionTool()],
 

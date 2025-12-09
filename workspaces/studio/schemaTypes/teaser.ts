@@ -24,6 +24,14 @@ export default defineType({
             type: 'image',
         }),
         defineField({
+            name: 'teaserBackgroundVideo',
+            title: 'Vídeo de Fundo (opcional)',
+            type: 'file',
+            options: {
+                accept: 'video/*',
+            },
+        }),
+        defineField({
             name: 'orcamentoBotao',
             title: 'Botao de Orçamento',
             type: 'string',

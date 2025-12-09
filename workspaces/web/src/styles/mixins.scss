@@ -1,23 +1,25 @@
+@import "./breakpoints.scss";
+
 @mixin media-tablet {
-    @include media-min-width($breakpoint-tablet) {
-        @content;
-    }
+  @include media-min-width($breakpoint-tablet) {
+    @content;
+  }
 }
- 
+
 @mixin media-desktop {
-    @include media-min-width($breakpoint-desktop) {
-        @content;
-    }
+  @include media-min-width($breakpoint-desktop) {
+    @content;
+  }
 }
 
 @mixin media-desktop-wide {
-    @include media-min-width($breakpoint-desktop-wide) {
-        @content;
-    }
+  @include media-min-width($breakpoint-desktop-wide) {
+    @content;
+  }
 }
- 
+
 @mixin media-min-width($width) {
-    @media only screen and (min-width: $width) {
-        @content;
-    }
+  @media only screen and (min-width: $width) {
+    @content;
+  }
 }
