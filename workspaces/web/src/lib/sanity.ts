@@ -49,11 +49,11 @@ export type Project = {
   mainImageUrl?: string;
 };
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "j87m344w";
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2025-01-01";
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION;
 const readToken = process.env.SANITY_API_READ_TOKEN;
-const studioUrl = process.env.SANITY_STUDIO_URL || "http://localhost:3333";
+const studioUrl = process.env.SANITY_STUDIO_URL;
 const defaultRevalidate = 60;
 
 type FetchOptions = {
