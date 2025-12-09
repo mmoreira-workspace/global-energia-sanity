@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { VisualEditing } from "next-sanity/visual-editing";
+import { draftMode } from "next/headers";
 import "./globals.css";
 import "@/styles/global.scss";
 import "@/styles/home.scss";
@@ -13,9 +15,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { isEnabled } = draftMode();
+
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body>
+        {children}
+        {isEnabled ? <VisualEditing /> : null}
+      </body>
     </html>
   );
 }

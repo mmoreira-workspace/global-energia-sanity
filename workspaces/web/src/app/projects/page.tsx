@@ -1,14 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import Layout from "@/components/Layout";
 import { getProjects, getSiteSettings } from "@/lib/sanity";
+import { draftMode } from "next/headers";
 import "@/styles/projects.scss";
 
 export const revalidate = 60;
 
 export default async function ProjectsPage() {
+  const { isEnabled } = draftMode();
   const [projects, siteSettings] = await Promise.all([
-    getProjects(),
-    getSiteSettings(),
+    getProjects({ preview: isEnabled }),
+    getSiteSettings({ preview: isEnabled }),
   ]);
 
   const headerButtons = siteSettings?.headerButtons || [];

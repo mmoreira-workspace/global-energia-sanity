@@ -1,4 +1,4 @@
-import { createClient } from "@sanity/client";
+import { createClient, type ClientConfig } from "next-sanity";
 
 export type SanityButton = {
   buttonText?: string;
@@ -52,16 +52,38 @@ export type Project = {
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "j87m344w";
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2025-01-01";
+const readToken = process.env.SANITY_API_READ_TOKEN;
+const studioUrl = process.env.SANITY_STUDIO_URL || "http://localhost:3333";
+const defaultRevalidate = 60;
 
-const client = createClient({
+type FetchOptions = {
+  preview?: boolean;
+};
+
+const sharedConfig: ClientConfig = {
   projectId,
   dataset,
   apiVersion,
-  useCdn: true,
-  perspective: "published",
-});
+};
 
-const revalidate = 60;
+function getClient(preview: boolean) {
+  if (preview && readToken) {
+    return createClient({
+      ...sharedConfig,
+      token: readToken,
+      useCdn: false,
+      perspective: "previewDrafts",
+      stega: { enabled: true, studioUrl },
+    });
+  }
+
+  return createClient({
+    ...sharedConfig,
+    useCdn: true,
+    perspective: "published",
+    stega: { enabled: false },
+  });
+}
 
 const siteSettingsQuery = `
 *[_type == "siteSettings"][0]{
@@ -122,14 +144,20 @@ const projectsQuery = `
 }
 `;
 
-export async function getSiteSettings(): Promise<SiteSettings | null> {
-  return client.fetch<SiteSettings>(siteSettingsQuery, {}, { next: { revalidate } });
+export async function getSiteSettings({ preview = false }: FetchOptions = {}): Promise<SiteSettings | null> {
+  const client = getClient(preview);
+  const fetchOptions = preview ? { cache: "no-store" as const } : { next: { revalidate: defaultRevalidate } };
+  return client.fetch<SiteSettings>(siteSettingsQuery, {}, fetchOptions);
 }
 
-export async function getHomePageData(): Promise<HomePageData | null> {
-  return client.fetch<HomePageData>(homePageQuery, {}, { next: { revalidate } });
+export async function getHomePageData({ preview = false }: FetchOptions = {}): Promise<HomePageData | null> {
+  const client = getClient(preview);
+  const fetchOptions = preview ? { cache: "no-store" as const } : { next: { revalidate: defaultRevalidate } };
+  return client.fetch<HomePageData>(homePageQuery, {}, fetchOptions);
 }
 
-export async function getProjects(): Promise<Project[]> {
-  return client.fetch<Project[]>(projectsQuery, {}, { next: { revalidate } });
+export async function getProjects({ preview = false }: FetchOptions = {}): Promise<Project[]> {
+  const client = getClient(preview);
+  const fetchOptions = preview ? { cache: "no-store" as const } : { next: { revalidate: defaultRevalidate } };
+  return client.fetch<Project[]>(projectsQuery, {}, fetchOptions);
 }

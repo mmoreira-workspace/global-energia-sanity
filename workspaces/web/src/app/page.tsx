@@ -2,13 +2,15 @@
 import FaqList from "@/components/FaqList";
 import Layout from "@/components/Layout";
 import { getHomePageData, getSiteSettings } from "@/lib/sanity";
+import { draftMode } from "next/headers";
 
 export const revalidate = 60;
 
 export default async function Home() {
+  const { isEnabled } = draftMode();
   const [homeData, siteSettings] = await Promise.all([
-    getHomePageData(),
-    getSiteSettings(),
+    getHomePageData({ preview: isEnabled }),
+    getSiteSettings({ preview: isEnabled }),
   ]);
 
   const headerButtons = siteSettings?.headerButtons || [];
