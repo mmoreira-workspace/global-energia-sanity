@@ -7,7 +7,7 @@ import "@/styles/projects.scss";
 export const revalidate = 60;
 
 export default async function ProjectsPage() {
-  const { isEnabled } = draftMode();
+  const { isEnabled } = await draftMode();
   const [projects, siteSettings] = await Promise.all([
     getProjects({ preview: isEnabled }),
     getSiteSettings({ preview: isEnabled }),

@@ -10,12 +10,12 @@ export const metadata: Metadata = {
   description: "Soluções em energia solar e projetos da Global Energia.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { isEnabled } = draftMode();
+  const { isEnabled } = await draftMode();
 
   return (
     <html lang="pt-BR">
