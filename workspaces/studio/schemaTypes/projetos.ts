@@ -32,6 +32,16 @@ export default defineType({
             },
         }),
         defineField({
+            name: 'projectList',
+            title: 'Lista de Projetos para o Carrossel',
+            type: 'array',
+            description: 'Selecione os projetos que aparecerão no carrossel da home page',
+            of: [{
+                type: 'reference',
+                to: [{ type: 'projectPage' }]
+            }],
+        }),
+        defineField({
             name: 'buttons',
             title: 'Solicitar orçamento',
             type: 'array',

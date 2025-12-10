@@ -1,10 +1,34 @@
 @import "./mixins.scss";
 
+// Keyframe Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 $container-max: 1120px;
 $container-pad: 16px;
 
 main {
   background-color: #f0f0f0;
+  padding-top: 78px;
 }
 
 section {
@@ -19,9 +43,15 @@ section {
 
 header {
   background-color: #0b599b;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 
   .header-container {
-    overflow: hidden;
     height: 78px;
     display: flex;
     justify-content: space-between;
@@ -32,6 +62,7 @@ header {
     margin-left: auto;
     margin-right: auto;
     padding: 0 $container-pad;
+    width: 100%;
     max-width: 1280px;
 
     .header-logo {
@@ -164,93 +195,186 @@ header {
 .container {
   &.home-teaser {
     position: relative;
-    height: fit-content;
-    padding: 32px 0 24px;
+    height: 100vh;
+    min-height: 600px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    @include media-tablet {
+      flex-direction: row;
+      align-items: center;
+      padding: 0 $container-pad;
+    }
 
     .home-teaser-image-bg {
       position: absolute;
       inset: 0;
       width: 100%;
-      aspect-ratio: 3 / 2;
       height: 100%;
       object-fit: cover;
+      z-index: 0;
+    }
+
+    // Overlay to improve text readability
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.4) 100%);
+      z-index: 1;
+
+      @include media-tablet {
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%);
+      }
+    }
+
+    .container-teaser {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      padding: 120px 20px 40px; // Top padding for header space on mobile
+      max-width: $container-max;
+      margin: 0 auto;
+      gap: 4rem;
+
+      @include media-tablet {
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0;
+        gap: 2rem;
+      }
     }
 
     .container-text {
-      width: min(90%, 540px);
+      width: 100%;
       display: flex;
-      justify-content: center;
+      gap: 2rem;
       flex-direction: column;
-      margin: auto;
-      position: relative;
-      z-index: 1;
-      max-width: 540px;
+      align-items: center;
       text-align: center;
+
+      @include media-tablet {
+        width: 50%;
+        max-width: 600px;
+        align-items: flex-start;
+        text-align: left;
+        margin: 0;
+      }
 
       .simple-h1 {
         color: #fff;
-        text-align: center;
         font-family: "Roboto Condensed";
-        font-size: clamp(28px, 4vw, 42px);
-        font-style: normal;
-        font-weight: 500;
+        font-size: clamp(36px, 8vw, 48px);
+        font-weight: 700;
         line-height: 1.1;
-        margin-bottom: 12px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        animation: fadeInUp 0.8s ease-out;
+        text-align: center;
+
+        @include media-tablet {
+          font-size: clamp(40px, 5vw, 64px);
+        }
       }
 
       .home-teaser-logo {
-        width: 100%;
-        max-width: 320px;
-        margin: 0 auto 20px;
+        width: 250px;
+        margin: auto;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+        animation: fadeIn 1s ease-out 0.2s both;
+
+        @include media-tablet {
+          width: 400px;
+          margin-bottom: 32px;
+        }
       }
     }
 
     .container-box {
-      width: min(95%, 540px);
-      background-color: #fff;
-      min-height: 190px;
+      width: 50%;
+      max-width: 600px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      margin: auto;
-      border-radius: 31px;
       gap: 16px;
-      position: relative;
-      z-index: 1;
-      max-width: 560px;
-      padding: 16px 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+      margin: auto;
+
+      // Removed white background box style - adapting to transparent/clean look
+      background-color: transparent;
+      padding: 0;
+      box-shadow: none;
+      min-height: auto;
+
+      @include media-tablet {
+        flex-direction: row;
+        gap: 24px;
+        margin: 0;
+      }
 
       .button {
         display: flex;
-        margin: 0 auto;
-        width: 100%;
-        height: 40px;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
+        justify-content: center;
         align-items: center;
+        width: 100%;
+        height: 56px;
+        border-radius: 50px; // Pill shape buttons
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        font-family: "Roboto Condensed";
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
 
         @include media-tablet {
-          width: 280px;
-          height: 44px;
+          width: auto;
+          min-width: 220px;
         }
 
-        &:hover {
-          transform: scale(1.03) translateY(-2px);
-          box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-          transition: transform 0.2s, box-shadow 0.2s;
+        // Primary Button (Usually first)
+        &:nth-child(1) {
+          background-color: #e07719;
+          box-shadow: 0 4px 15px rgba(224, 119, 25, 0.4);
+
+          &:hover {
+            background-color: #f58826;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(224, 119, 25, 0.6);
+          }
+        }
+
+        // Secondary Button
+        &:nth-child(2) {
+          background-color: transparent;
+          border: 2px solid #fff;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+          &:hover {
+            background-color: #fff;
+
+            .button-link {
+              color: #0b599b;
+            }
+          }
         }
 
         .button-link {
           color: #fff;
-          display: flex;
-          justify-content: center;
-          margin: auto;
           text-decoration: none;
+          width: 100%;
+          height: 100%;
           font-size: 16px;
           font-weight: 600;
           letter-spacing: 0.01em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           padding: 0 16px;
 
           @include media-tablet {
@@ -258,53 +382,84 @@ header {
           }
         }
       }
-
-      .button:nth-child(1) {
-        background-color: #e07719;
-      }
-
-      .button:nth-child(2) {
-        background-color: #0b599b;
-      }
     }
   }
 
   &.about-us {
-    padding: 24px 0 8px;
+    padding: 48px 16px;
+
+    @include media-tablet {
+      padding: 64px 16px;
+    }
 
     .container-about-us {
-      margin: 16px auto 0;
-      padding: 24px 16px;
-      border-radius: 12px;
-      background-color: #fff;
+      padding: 32px 24px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
       max-width: $container-max;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       display: grid;
-      gap: 12px;
+      gap: 16px;
+      position: relative;
+      margin: auto;
+
+      // &::before {
+      //   content: '';
+      //   position: absolute;
+      //   top: 0;
+      //   left: 0;
+      //   right: 0;
+      //   height: 4px;
+      //   background: linear-gradient(90deg, #0b599b 0%, #e07719 100%);
+      //   border-radius: 16px 16px 0 0;
+      // }
+
+      @include media-tablet {
+        padding: 40px 48px;
+      }
 
       .simple-h2 {
-        margin: 0;
+        margin: 0 0 8px;
         color: #0b599b;
         text-align: center;
         font-family: "Roboto Condensed";
-        font-size: 20px;
+        font-size: clamp(24px, 4vw, 32px);
         font-style: normal;
-        font-weight: 500;
+        font-weight: 600;
         line-height: 1.2;
+        position: relative;
+        padding-bottom: 12px;
 
         @include media-tablet {
-          font-size: 24px;
           text-align: left;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 60px;
+          height: 3px;
+          background: linear-gradient(90deg, #e07719 0%, #ffbc27 100%);
+          border-radius: 2px;
+
+          @include media-tablet {
+            left: 0;
+            transform: none;
+          }
         }
       }
 
       .simple-paragraph {
-        color: #000;
+        color: #333;
         font-family: "Roboto Condensed";
         font-size: 16px;
         font-style: normal;
         font-weight: 400;
-        line-height: 1.5;
+        line-height: 1.65;
+        margin-top: 8px;
 
         @include media-tablet {
           font-size: 18px;
@@ -414,66 +569,90 @@ header {
   }
 
   &.faq {
-    padding: 40px $container-pad;
+    padding: 48px $container-pad;
     max-width: $container-max;
     margin-left: auto;
     margin-right: auto;
 
     @include media-tablet {
-      padding: 48px 32px;
+      padding: 64px 32px;
     }
 
     .simple-h2 {
-      margin: 0 0 16px;
+      margin: 0 0 24px;
       color: #0b599b;
-      text-align: start;
+      text-align: center;
       font-family: "Roboto Condensed";
-      font-size: 20px;
+      font-size: clamp(24px, 4vw, 32px);
       font-style: normal;
-      font-weight: 500;
+      font-weight: 600;
       line-height: 1.2;
 
       @include media-tablet {
-        font-size: 24px;
+        text-align: start;
       }
     }
 
     .faq-item {
       margin-bottom: 16px;
-      border-radius: 12px;
-      background: #ffbc27;
+      border-radius: 14px;
+      background: #fff;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+      transition: all 0.3s ease;
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        border-color: #ffbc27;
+      }
+
+      @include media-tablet {
+        margin-bottom: 20px;
+      }
 
       .faq-question {
         font-size: 16px;
-        color: #fff;
-        transition: color 0.3s;
-        padding: 12px 16px;
+        color: #0b599b;
+        transition: all 0.3s ease;
+        padding: 16px 20px;
         font-weight: 600;
         cursor: pointer;
+        background-color: #f8f9fa;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
         @include media-tablet {
           font-size: 18px;
+          padding: 18px 24px;
+        }
+
+        &::after {
+          content: '+';
+          font-size: 24px;
+          color: #0b599b;
+          font-weight: 600;
+          transition: transform 0.3s ease;
         }
 
         &:hover {
-          color: #0b599b;
+          background-color: #e8f4f8;
         }
       }
 
       .faq-answer {
-        font-size: 16px;
-        color: #000;
-        line-height: 1.5;
+        font-size: 15px;
+        color: #555;
+        line-height: 1.7;
         position: relative;
         background-color: #fff;
-        padding: 12px 16px 16px;
-        border-bottom-right-radius: 12px;
-        border-bottom-left-radius: 12px;
+        padding: 16px 20px 20px;
 
         @include media-tablet {
-          font-size: 18px;
+          font-size: 17px;
+          padding: 20px 24px 24px;
         }
       }
     }
@@ -537,8 +716,153 @@ footer {
   }
 }
 
-.text {
-}
+// Carousel Styles
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 24px auto; // Kept margin
+  overflow: hidden;
+  // No box shadow on container, shadow is on cards now.
 
-.button {
+  @include media-tablet {
+    max-width: $container-max; // Use standard max width for alignment
+    padding: 0 32px; // Add padding for arrows if they are outside? Or floating.
+  }
+
+  .carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-out;
+    width: 100%;
+    // Important for correct sizing
+    box-sizing: border-box;
+    margin: auto;
+  }
+
+  .carousel-item {
+    box-sizing: border-box;
+    padding: 0 8px; // Gap
+    flex-shrink: 0;
+  }
+
+  .project-card {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // Subtle shadow
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid transparent;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      border-color: rgba(224, 119, 25, 0.3); // Orange hint on hover
+    }
+
+    .card-image-wrapper {
+      width: 100%;
+      aspect-ratio: 4 / 3; // Standard card ratio
+      background-color: #eee;
+      overflow: hidden;
+
+      .card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .card-placeholder {
+        width: 100%;
+        height: 100%;
+        background-color: #ddd;
+      }
+    }
+
+    &:hover .card-image {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex-grow: 1;
+
+      .card-category {
+        font-family: "Roboto Condensed";
+        font-size: 14px;
+        font-weight: 700;
+        color: #fff;
+        background-color: #0b599b;
+        padding: 6px 16px;
+        border-radius: 20px;
+        margin-bottom: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .card-description {
+        font-family: "Roboto Condensed";
+        font-size: 15px;
+        color: #666;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+
+  .carousel-controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+
+    @include media-tablet {
+      // Floating arrows for desktop? Or keeping them at bottom centered is safer for varied content heights?
+      // Reference image doesn't show arrows.
+      // Let's keep bottom controls for now, cleaner.
+    }
+
+    .carousel-button {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      color: #0b599b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+      &:hover:not(:disabled) {
+        background-color: #0b599b;
+        color: #fff;
+        border-color: #0b599b;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: #f5f5f5;
+      }
+    }
+  }
 }

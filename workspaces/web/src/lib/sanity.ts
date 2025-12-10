@@ -30,6 +30,7 @@ export type HomePageData = {
     image1Url?: string;
     image2Url?: string;
     buttons?: SanityButton[];
+    projectList?: Project[];
   };
   faq?: {
     title?: string;
@@ -47,6 +48,7 @@ export type Project = {
   location?: string;
   category?: string;
   mainImageUrl?: string;
+  date?: string;
 };
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
@@ -121,6 +123,15 @@ const homePageQuery = `
     buttons[]{
       buttonText,
       "buttonUrl": coalesce(buttonUrl, select(defined(internalLink->slug.current) => "/projects/" + internalLink->slug.current))
+    },
+    "projectList": projectList[]->{
+      title,
+      "slug": slug.current,
+      description,
+      location,
+      category,
+      "mainImageUrl": mainImage.asset->url,
+      date
     }
   },
   "faq": faq->{
@@ -140,7 +151,8 @@ const projectsQuery = `
   description,
   location,
   category,
-  "mainImageUrl": mainImage.asset->url
+  "mainImageUrl": mainImage.asset->url,
+  date
 }
 `;
 
