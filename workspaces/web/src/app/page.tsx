@@ -15,12 +15,11 @@ export default async function Home() {
   ]);
 
   const headerButtons = siteSettings?.headerButtons || [];
-  const logoUrl = siteSettings?.logoUrl;
   const footerText = siteSettings?.footerText;
 
   if (!homeData) {
     return (
-      <Layout logoUrl={logoUrl} headerButtons={headerButtons} footerText={footerText}>
+      <Layout headerButtons={headerButtons} footerText={footerText}>
         <section className="container about-us">
           <div className="container container-about-us">
             <h2 className="text simple-h2">Conteúdo não encontrado</h2>
@@ -36,7 +35,7 @@ export default async function Home() {
   const { teaser, sobreNos, projetos, faq } = homeData;
 
   return (
-    <Layout logoUrl={logoUrl} headerButtons={headerButtons} footerText={footerText}>
+    <Layout headerButtons={headerButtons} footerText={footerText}>
       <section className="container home-teaser">
         {teaser?.teaserBackgroundVideoUrl ? (
           <video

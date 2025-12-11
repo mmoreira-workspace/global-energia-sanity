@@ -14,12 +14,11 @@ export default async function ProjectsPage() {
   ]);
 
   const headerButtons = siteSettings?.headerButtons || [];
-  const logoUrl = siteSettings?.logoUrl;
   const footerText = siteSettings?.footerText;
   const projectList = projects || [];
 
   return (
-    <Layout logoUrl={logoUrl} headerButtons={headerButtons} footerText={footerText}>
+    <Layout headerButtons={headerButtons} footerText={footerText}>
       <section className="container project-page">
         <h1 className="text simple-h1">Projetos Realizados</h1>
         {projectList.length === 0 ? (

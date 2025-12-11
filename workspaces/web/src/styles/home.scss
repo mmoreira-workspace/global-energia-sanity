@@ -50,6 +50,11 @@ header {
   width: 100%;
   z-index: 1000;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease;
+
+  &.scrolled {
+    background-color: #fff;
+  }
 
   .header-container {
     height: 78px;
@@ -244,9 +249,13 @@ header {
 
       @include media-tablet {
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
         padding: 0;
         gap: 2rem;
+      }
+
+      @include media-desktop {
+        align-items: flex-start;
       }
     }
 

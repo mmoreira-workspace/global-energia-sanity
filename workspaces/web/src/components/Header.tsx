@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface HeaderButton {
   buttonText?: string;
@@ -9,20 +9,32 @@ interface HeaderButton {
 }
 
 interface HeaderProps {
-  logoUrl?: string;
   buttons?: HeaderButton[];
 }
 
-export default function Header({ logoUrl, buttons = [] }: HeaderProps) {
+export default function Header({ buttons = [] }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header>
+    <header className={isScrolled ? 'scrolled' : ''}>
       <div className="header-container">
-        {logoUrl ? (
-          <img src={logoUrl} alt="Logo" className="header-logo" />
-        ) : null}
+        <img
+          src={isScrolled ? '/logo-dark.png' : '/logo-white.png'}
+          alt="Logo"
+          className="header-logo"
+        />
         <nav className="header-nav">
           <button
             className="hamburger-button"

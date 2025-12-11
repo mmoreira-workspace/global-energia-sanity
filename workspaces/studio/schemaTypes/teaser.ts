@@ -32,13 +32,6 @@ export default defineType({
             },
         }),
         defineField({
-            name: 'orcamentoBotao',
-            title: 'Botao de Orçamento',
-            type: 'string',
-            description: 'Ex: Solicitar seu orçamento',
-            validation: Rule => Rule.required(),
-        }),
-        defineField({
             name: 'buttons',
             title: 'Botoes',
             type: 'array',

@@ -12,14 +12,6 @@ export default defineType({
             description: 'Ex: Sobre Nós',
         }),
         defineField({
-            name: 'image',
-            title: 'Imagem Sobre Nós',
-            type: 'image',
-            options: {
-                hotspot: true,
-            },
-        }),
-        defineField({
             name: 'description',
             title: 'Descricao Sobre Nós',
             type: 'text',
