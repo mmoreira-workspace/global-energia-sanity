@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import TeaserButtons from "@/components/TeaserButtons";
 import FaqList from "@/components/FaqList";
 import Layout from "@/components/Layout";
 import ProjectsCarousel from "@/components/ProjectsCarousel";
@@ -69,15 +70,7 @@ export default async function Home() {
             ) : null}
           </div>
           {teaser?.buttons?.length ? (
-            <div className="container container-box">
-              {teaser.buttons.map((button, index) => (
-                <div key={index} className="button">
-                  <a href={button.anchorLink || button.buttonUrl || "#"} className="button-link">
-                    {button.buttonText}
-                  </a>
-                </div>
-              ))}
-            </div>
+            <TeaserButtons buttons={teaser.buttons} />
           ) : null}
         </div>
 

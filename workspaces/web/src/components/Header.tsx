@@ -45,7 +45,31 @@ export default function Header({ buttons = [] }: HeaderProps) {
           <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
             {buttons.map((button, index) => (
               <li key={index} className="nav-item">
-                <a href={button.anchorLink || button.buttonUrl || "#"} className="nav-link">
+                <a
+                  href={button.anchorLink || button.buttonUrl || "#"}
+                  className="nav-link"
+                  onClick={(e) => {
+                    const href = button.anchorLink || button.buttonUrl || "#";
+                    if (href.startsWith('#')) {
+                      e.preventDefault();
+                      const targetId = href.substring(1);
+                      const targetElement = document.getElementById(targetId);
+                      if (targetElement) {
+                        const headerOffset = 100;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: 'smooth'
+                        });
+
+                        // Close mobile menu if open
+                        setIsMenuOpen(false);
+                      }
+                    }
+                  }}
+                >
                   {button.buttonText}
                 </a>
               </li>
