@@ -110,14 +110,6 @@ header {
           margin: 0;
           text-align: center;
 
-          &:nth-child(2) {
-            display: none;
-
-            @include media-tablet {
-              display: inline;
-            }
-          }
-
           .nav-link {
             color: #fff;
             font-family: $font-gotham;
