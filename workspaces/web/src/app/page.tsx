@@ -17,6 +17,10 @@ export default async function Home() {
   const headerButtons = siteSettings?.headerButtons || [];
   const footerText = siteSettings?.footerText;
 
+  // DEBUG: verificar dados do Sanity
+  console.log('Site Settings:', siteSettings);
+  console.log('Header Buttons from Sanity:', headerButtons);
+
   if (!homeData) {
     return (
       <Layout headerButtons={headerButtons} footerText={footerText}>
