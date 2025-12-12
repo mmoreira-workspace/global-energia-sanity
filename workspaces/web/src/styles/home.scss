@@ -475,6 +475,7 @@ header {
         font-weight: 100;
         line-height: 1.65;
         margin-top: 8px;
+        white-space: pre-line;
 
         @include media-tablet {
           font-size: 18px;
