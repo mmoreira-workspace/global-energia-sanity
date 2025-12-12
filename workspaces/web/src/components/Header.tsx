@@ -28,9 +28,6 @@ export default function Header({ buttons = [] }: HeaderProps) {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  // DEBUG: verificar se os dados estão chegando
-  console.log('Header buttons:', buttons);
-
   return (
     <header className={isScrolled ? 'scrolled' : ''}>
       <div className="header-container">
