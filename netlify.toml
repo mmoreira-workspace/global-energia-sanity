@@ -3,15 +3,8 @@
   command = "npm run build"
   publish = ".next"
 
+[build.environment]
+  NODE_VERSION = "20.18.0"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-
-[build.environment]
-  NODE_VERSION = "18"
-
-# Configurações para variáveis de ambiente do Sanity
-# Certifique-se de adicionar essas variáveis no painel do Netlify:
-# NEXT_PUBLIC_SANITY_PROJECT_ID
-# NEXT_PUBLIC_SANITY_DATASET
-# NEXT_PUBLIC_SANITY_API_VERSION
-# SANITY_API_READ_TOKEN (se necessário)
