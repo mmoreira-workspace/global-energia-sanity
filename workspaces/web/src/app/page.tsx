@@ -72,7 +72,7 @@ export default async function Home() {
             <div className="container container-box">
               {teaser.buttons.map((button, index) => (
                 <div key={index} className="button">
-                  <a href={button.buttonUrl || "#"} className="button-link">
+                  <a href={button.anchorLink || button.buttonUrl || "#"} className="button-link">
                     {button.buttonText}
                   </a>
                 </div>
@@ -84,7 +84,7 @@ export default async function Home() {
       </section>
 
       {sobreNos ? (
-        <section className="container about-us">
+        <section className="container about-us" id="sobre-nos">
           <div className="container container-about-us">
             <h2 className="text simple-h2">{sobreNos.title}</h2>
             <p className="text simple-paragraph">{sobreNos.description}</p>
@@ -93,7 +93,7 @@ export default async function Home() {
       ) : null}
 
       {projetos ? (
-        <section className="container projects">
+        <section className="container projects" id="projetos">
           <div className="container container-projects">
             <h2 className="text simple-h2">{projetos.title}</h2>
             {projetos.projectList && projetos.projectList.length > 0 ? (
@@ -130,7 +130,7 @@ export default async function Home() {
       ) : null}
 
       {faq ? (
-        <section className="container faq">
+        <section className="container faq" id="faq">
           <h2 className="text simple-h2">{faq.title}</h2>
           <FaqList items={faq.listOfFaq} />
         </section>

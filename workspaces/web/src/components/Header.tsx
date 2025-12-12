@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 
 interface HeaderButton {
   buttonText?: string;
+  anchorLink?: string;
   buttonUrl?: string;
 }
 
@@ -31,7 +32,7 @@ export default function Header({ buttons = [] }: HeaderProps) {
     <header className={isScrolled ? 'scrolled' : ''}>
       <div className="header-container">
         <img
-          src={isScrolled ? '/logo-dark.png' : '/logo-white.png'}
+          src={isScrolled ? '/logo-hover.png' : '/logo.png'}
           alt="Logo"
           className="header-logo"
         />
@@ -44,7 +45,7 @@ export default function Header({ buttons = [] }: HeaderProps) {
           <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
             {buttons.map((button, index) => (
               <li key={index} className="nav-item">
-                <a href={button.buttonUrl || "#"} className="nav-link">
+                <a href={button.anchorLink || button.buttonUrl || "#"} className="nav-link">
                   {button.buttonText}
                 </a>
               </li>

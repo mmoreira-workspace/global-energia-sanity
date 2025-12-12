@@ -5,6 +5,7 @@ import Header from "./Header";
 interface LayoutProps {
   headerButtons?: {
     buttonText?: string;
+    anchorLink?: string;
     buttonUrl?: string;
   }[];
   footerText?: string;

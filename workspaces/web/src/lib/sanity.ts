@@ -2,6 +2,7 @@ import { createClient, type ClientConfig } from "next-sanity";
 
 export type SanityButton = {
   buttonText?: string;
+  anchorLink?: string;
   buttonUrl?: string;
 };
 
@@ -93,6 +94,7 @@ const siteSettingsQuery = `
   "logoUrl": logo.asset->url,
   headerButtons[]{
     buttonText,
+    anchorLink,
     "buttonUrl": coalesce(buttonUrl, select(defined(internalLink->slug.current) => "/projects/" + internalLink->slug.current))
   }
 }
@@ -107,6 +109,7 @@ const homePageQuery = `
     "teaserBackgroundVideoUrl": teaserBackgroundVideo.asset->url,
     buttons[]{
       buttonText,
+      anchorLink,
       "buttonUrl": coalesce(buttonUrl, select(defined(internalLink->slug.current) => "/projects/" + internalLink->slug.current))
     }
   },
@@ -122,6 +125,7 @@ const homePageQuery = `
     "image2Url": image2.asset->url,
     buttons[]{
       buttonText,
+      anchorLink,
       "buttonUrl": coalesce(buttonUrl, select(defined(internalLink->slug.current) => "/projects/" + internalLink->slug.current))
     },
     "projectList": projectList[]->{

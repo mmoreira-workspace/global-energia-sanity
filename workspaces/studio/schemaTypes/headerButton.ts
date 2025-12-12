@@ -11,11 +11,24 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+      name: 'anchorLink',
+      title: 'Link para Seção (Anchor)',
+      type: 'string',
+      description: 'Selecione uma seção da página ou digite um ID customizado',
+      options: {
+        list: [
+          { title: 'Sobre Nós', value: '#sobre-nos' },
+          { title: 'Projetos', value: '#projetos' },
+          { title: 'FAQ', value: '#faq' },
+        ],
+      },
+    }),
+    defineField({
       name: 'buttonUrl',
       title: 'URL do Botão',
       type: 'url',
       validation: Rule =>
-        Rule.required().uri({
+        Rule.uri({
           scheme: ['http', 'https', 'mailto', 'tel'],
         }),
     }),

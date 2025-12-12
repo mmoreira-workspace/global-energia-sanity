@@ -25,7 +25,7 @@ export default function FaqList({ items = [] }: FaqListProps) {
       {items.map((item, index) => (
         <div key={index} className="faq-item">
           <div
-            className="faq-question"
+            className={`faq-question ${openIndex === index ? 'open' : ''}`}
             onClick={() => toggleFaq(index)}
             role="button"
             tabIndex={0}

@@ -11,10 +11,23 @@ export default ({
             type: 'string',
         }),
         defineField({
+            name: 'anchorLink',
+            title: 'Link para Seção (Anchor)',
+            type: 'string',
+            description: 'Selecione uma seção da página ou digite um ID customizado',
+            options: {
+                list: [
+                    { title: 'Sobre Nós', value: '#sobre-nos' },
+                    { title: 'Projetos', value: '#projetos' },
+                    { title: 'FAQ', value: '#faq' },
+                ],
+            },
+        }),
+        defineField({
             name: 'internalLink',
             title: 'Pagina Interna',
             type: 'reference',
-            to: [{type: 'projectPage'}]
+            to: [{ type: 'projectPage' }]
         }),
         defineField({
             name: 'buttonUrl',
