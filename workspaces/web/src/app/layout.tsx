@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { VisualEditing } from "next-sanity/visual-editing";
-import { draftMode } from "next/headers";
 import Script from "next/script";
 import "./globals.css";
 import "@/styles/global.scss";
@@ -11,18 +9,16 @@ export const metadata: Metadata = {
   description: "Soluções em energia solar e projetos da Global Energia.",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { isEnabled } = await draftMode();
 
   return (
     <html lang="pt-BR">
       <body>
         {children}
-        {isEnabled ? <VisualEditing /> : null}
 
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
