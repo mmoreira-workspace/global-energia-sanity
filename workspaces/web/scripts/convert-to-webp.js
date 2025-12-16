@@ -76,18 +76,37 @@ async function updateHTMLReferences() {
         let content = fs.readFileSync(htmlFile, 'utf-8');
         let updated = false;
 
-        // Substituir referências de imagens por WebP
+        // Substituir APENAS referências LOCAIS de imagens por WebP
+        // NÃO substituir URLs do Sanity CDN (cdn.sanity.io)
         const replacements = [
-            { pattern: /\.png/g, replacement: '.webp' },
-            { pattern: /\.jpg/g, replacement: '.webp' },
-            { pattern: /\.jpeg/g, replacement: '.webp' },
+            {
+                pattern: /(?<!cdn\.sanity\.io[^"']*)(\.png)(?![^<]*cdn\.sanity\.io)/gi,
+                replacement: '.webp'
+            },
+            {
+                pattern: /(?<!cdn\.sanity\.io[^"']*)(\.jpg)(?![^<]*cdn\.sanity\.io)/gi,
+                replacement: '.webp'
+            },
+            {
+                pattern: /(?<!cdn\.sanity\.io[^"']*)(\.jpeg)(?![^<]*cdn\.sanity\.io)/gi,
+                replacement: '.webp'
+            },
         ];
 
         for (const { pattern, replacement } of replacements) {
-            if (pattern.test(content)) {
-                content = content.replace(pattern, replacement);
+            // Substituir apenas referências que NÃO contenham cdn.sanity.io
+            content = content.replace(pattern, (match, ext, offset) => {
+                // Pegar contexto ao redor (50 chars antes e depois)
+                const context = content.substring(Math.max(0, offset - 50), Math.min(content.length, offset + 50));
+
+                // Se o contexto contém cdn.sanity.io, NÃO substituir
+                if (context.includes('cdn.sanity.io')) {
+                    return match;
+                }
+
                 updated = true;
-            }
+                return replacement;
+            });
         }
 
         if (updated) {
