@@ -36,7 +36,7 @@ export default defineType({
       title: 'Categoria',
       type: 'string',
       options: {
-        list: ['Residencial', 'Comercial', 'Industrial'],
+        list: ['Residencial', 'Comercial', 'Industrial', 'Rural'],
         layout: 'radio',
       },
     }),
