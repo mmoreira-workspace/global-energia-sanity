@@ -50,6 +50,8 @@ export default async function Home() {
             src={teaser.teaserBackgroundUrl}
             alt="Teaser Background"
             className="image home-teaser-image-bg"
+            loading="eager"
+            fetchPriority="high"
           />
         ) : null}
         <div className="container container-teaser">
@@ -59,6 +61,8 @@ export default async function Home() {
                 src={teaser.logoUrl}
                 alt="Logo"
                 className="image home-teaser-logo"
+                loading="eager"
+                fetchPriority="high"
               />
             ) : null}
             {teaser?.homeTitle ? (
@@ -94,6 +98,7 @@ export default async function Home() {
                     src={projetos.image1Url}
                     alt="Project Image 1"
                     className="project-image"
+                    loading="lazy"
                   />
                 ) : null}
                 {projetos.image2Url ? (
@@ -101,6 +106,7 @@ export default async function Home() {
                     src={projetos.image2Url}
                     alt="Project Image 2"
                     className="project-image"
+                    loading="lazy"
                   />
                 ) : null}
               </div>

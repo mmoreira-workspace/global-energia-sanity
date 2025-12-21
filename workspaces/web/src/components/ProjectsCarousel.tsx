@@ -160,6 +160,7 @@ export default function ProjectsCarousel({ projects }: ProjectsCarouselProps) {
                                             src={project.mainImageUrl}
                                             alt={project.title || 'Project'}
                                             className="card-image"
+                                            loading="lazy"
                                         />
                                     ) : (
                                         <div className="card-placeholder" />

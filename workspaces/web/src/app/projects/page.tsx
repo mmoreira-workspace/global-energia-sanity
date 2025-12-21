@@ -30,6 +30,7 @@ export default async function ProjectsPage() {
                     src={project.mainImageUrl}
                     alt={project.title || "Projeto"}
                     className="project-image"
+                    loading="lazy"
                   />
                 ) : null}
                 <div className="project-info">
