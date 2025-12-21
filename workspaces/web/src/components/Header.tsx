@@ -32,7 +32,7 @@ export default function Header({ buttons = [] }: HeaderProps) {
     <header className={isScrolled ? 'scrolled' : ''}>
       <div className="header-container">
         <img
-          src={isScrolled ? '/logo-hover.png' : '/logo.png'}
+          src={isScrolled ? '/logo-hover.webp' : '/logo.webp'}
           alt="Logo"
           className="header-logo"
         />

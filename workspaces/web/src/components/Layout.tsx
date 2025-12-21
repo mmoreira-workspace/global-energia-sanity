@@ -21,7 +21,7 @@ export default function Layout({
     <>
       <Header buttons={headerButtons} />
       <main>{children}</main>
-      <Footer logoUrl="/logo.png" footerText={footerText} />
+      <Footer logoUrl="/logo.webp" footerText={footerText} />
     </>
   );
 }
